@@ -3,6 +3,9 @@ package org.jbox2d.callbacks;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.particle.ParticleGroup;
 
+/**
+ * 粒子删除的时候调用
+ */
 public interface ParticleDestructionListener {
   /**
    * Called when any particle group is about to be destroyed.

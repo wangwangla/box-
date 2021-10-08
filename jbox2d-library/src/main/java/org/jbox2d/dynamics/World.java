@@ -340,6 +340,8 @@ public class World {
    * @warning This function is locked during callbacks.
    * @param def
    * @return
+   *
+   * 创建的刚体会存到一个链表中
    */
   public Body createBody(BodyDef def) {
     assert (isLocked() == false);
@@ -1074,6 +1076,7 @@ public class World {
     m_profile.solvePosition.startAccum();
 
     // update previous transforms
+    // 将位置信息进行 一次交换     计算之前将位置先保存到x_xf0中
     for (Body b = m_bodyList; b != null; b = b.m_next) {
       b.m_xf0.set(b.m_xf);
     }

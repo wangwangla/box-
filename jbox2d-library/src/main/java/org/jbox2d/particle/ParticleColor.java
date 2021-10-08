@@ -4,7 +4,7 @@ import org.jbox2d.common.Color3f;
 
 /**
  * Small color object for each particle
- * 
+ * 每个粒子的颜色
  * @author dmurph
  */
 public class ParticleColor {

@@ -34,6 +34,9 @@ import org.jbox2d.dynamics.joints.Joint;
  * body is destroyed. Implement this listener so that you
  * may nullify references to these joints and shapes.
  * @author Daniel Murphy
+ *
+ * 当相关联的主体被破坏时，关节和固定装置也会被破坏。
+ * 实现此侦听器，以便您可以取消对这些关节和形状的引用。
  */
 public interface DestructionListener {
 	

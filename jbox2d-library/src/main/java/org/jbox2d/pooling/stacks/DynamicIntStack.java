@@ -23,6 +23,9 @@
  ******************************************************************************/
 package org.jbox2d.pooling.stacks;
 
+/**
+ * 数组实现的一个集合存储类
+ */
 public class DynamicIntStack {
 
   private int[] stack;

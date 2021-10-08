@@ -34,11 +34,13 @@ import org.jbox2d.dynamics.Fixture;
  * Implement this class to provide collision filtering. In other words, you can implement
  * this class if you want finer control over contact creation.
  * @author Daniel Murphy
+ *
+ * 首先碰撞过滤，如果需要更加完善的，可以基础实现此方法
  */
 public class ContactFilter {
 
 	/**
-	 * 如果两个物体接触就会返回true
+	 * 如果两个物体接触就会触发碰撞  那么就返回true
 	 * Return true if contact calculations should be performed between these two shapes.
 	 * @warning for performance reasons this is only called when the AABBs begin to overlap.
 	 * @param fixtureA

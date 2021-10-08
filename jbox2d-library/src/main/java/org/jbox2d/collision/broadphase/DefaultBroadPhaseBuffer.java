@@ -58,8 +58,7 @@ public class DefaultBroadPhaseBuffer implements TreeCallback, BroadPhase {
 
   public DefaultBroadPhaseBuffer(BroadPhaseStrategy strategy) {
     m_proxyCount = 0;
-
-    m_pairCapacity = 16;
+    m_pairCapacity = 16;  //成对容器
     m_pairCount = 0;
     m_pairBuffer = new long[m_pairCapacity];
     for (int i = 0; i < m_pairCapacity; i++) {

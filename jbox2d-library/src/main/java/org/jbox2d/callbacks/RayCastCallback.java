@@ -34,6 +34,8 @@ import org.jbox2d.dynamics.World;
  * Callback class for ray casts.
  * See {@link World#raycast(RayCastCallback, Vec2, Vec2)}
  * @author Daniel Murphy
+ *
+ * 光线投射回调
  */
 public interface RayCastCallback {
 
@@ -50,6 +52,12 @@ public interface RayCastCallback {
 	 * @return -1 to filter, 0 to terminate, fraction to clip the ray for
 	 * closest hit, 1 to continue
 	 * @param fraction
+	 *
+	 * 为查询中找到的每个装置调用。
+	 * 您可以通过返回一个浮点数来控制光线投射的进行方式：
+	 * return -1：忽略此夹具并继续
+	 * return 0：终止光线投射返回分数：将光线剪裁到这一点
+	 * return 1：不剪裁光线并继续
 	 */
 	public float reportFixture(Fixture fixture, Vec2 point, Vec2 normal, float fraction);
 }

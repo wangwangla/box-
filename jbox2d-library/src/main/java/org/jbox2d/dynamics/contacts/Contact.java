@@ -40,7 +40,9 @@ import org.jbox2d.pooling.IWorldPool;
  * The class manages contact between two shapes. A contact exists for each overlapping AABB in the
  * broad-phase (except if filtered). Therefore a contact object may exist that has no contact
  * points.
- * 
+ *
+ * 该类管理两个形状之间的接触。 宽相中每个重叠的 AABB 都存在一个接触（除非经过过滤）。
+ * 因此，可能存在没有接触点的接触对象（我的理解就是 不发生碰撞模拟的两个物体）
  * @author daniel
  */
 public abstract class Contact {

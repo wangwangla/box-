@@ -13,6 +13,8 @@ public interface ParticleRaycastCallback {
    * @param normal
    * @param fraction
    * @return
+   *
+   * 查到每个粒子的时候调用
    */
   float reportParticle(int index, Vec2 point, Vec2 normal, float fraction);
 

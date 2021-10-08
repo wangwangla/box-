@@ -181,6 +181,9 @@ public class Body {
    * 
    * @param def the fixture definition.
    * @warning This function is locked during callbacks.
+   *
+   * 创建之后  将其加入到树中间
+   * 根据其 对质量进行重新极端
    */
   public final Fixture createFixture(FixtureDef def) {
     assert (m_world.isLocked() == false);

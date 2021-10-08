@@ -40,6 +40,11 @@ import org.jbox2d.common.Vec2;
  * small amounts without triggering a tree update.
  * 
  * @author daniel
+ *
+ * 动态树在二叉树中排列数据以加速查询，例如体积查询和光线投射。
+ * 叶子是 AABB 的代理。 在树中，我们通过 _fatAABBFactor
+ * 扩展代理 AABB，以便代理 AABB 大于客户端对象。
+ * 这允许客户端对象少量移动而不会触发树更新
  */
 public class DynamicTree implements BroadPhaseStrategy {
   public static final int MAX_STACK_SIZE = 64;
@@ -56,16 +61,20 @@ public class DynamicTree implements BroadPhaseStrategy {
   private DynamicTreeNode[] nodeStack = new DynamicTreeNode[20];
   private int nodeStackIndex = 0;
 
+  /**
+   * 动态树  默认初始化节点为16
+   */
   public DynamicTree() {
     m_root = null;
     m_nodeCount = 0;
     m_nodeCapacity = 16;
     m_nodes = new DynamicTreeNode[16];
 
+    //初始化容量为16
     // Build a linked list for the free list.
     for (int i = m_nodeCapacity - 1; i >= 0; i--) {
       m_nodes[i] = new DynamicTreeNode(i);
-      //创建，如何
+      //构成一个链状
       m_nodes[i].parent = (i == m_nodeCapacity - 1) ? null : m_nodes[i + 1];
       m_nodes[i].height = -1;
     }
@@ -79,7 +88,9 @@ public class DynamicTree implements BroadPhaseStrategy {
   @Override
   public final int createProxy(final AABB aabb, Object userData) {
     assert(aabb.isValid());
+    //闯进一个节点
     final DynamicTreeNode node = allocateNode();
+    //给节点设置信息
     int proxyId = node.id;
     // Fatten the aabb
     final AABB nodeAABB = node.aabb;
@@ -505,8 +516,14 @@ public class DynamicTree implements BroadPhaseStrategy {
 
   private final AABB combinedAABB = new AABB();
 
+  /**
+   *
+   * 插入叶子节点
+   * @param leaf_index
+   */
   private final void insertLeaf(int leaf_index) {
     DynamicTreeNode leaf = m_nodes[leaf_index];
+    //给树里加节点
     if (m_root == null) {
       m_root = leaf;
       m_root.parent = null;
@@ -522,7 +539,7 @@ public class DynamicTree implements BroadPhaseStrategy {
       DynamicTreeNode child2 = node.child2;
 
       float area = node.aabb.getPerimeter();
-
+      //将 AABB  合并
       combinedAABB.combine(node.aabb, leafAABB);
       float combinedArea = combinedAABB.getPerimeter();
 

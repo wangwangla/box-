@@ -76,6 +76,14 @@ public interface BroadPhase {
    * 
    * @param input the ray-cast input data. The ray extends from p1 to p1 + maxFraction * (p2 - p1).
    * @param callback a callback class that is called for each proxy that is hit by the ray.
+   *
+   * 对树中的代理进行光线投射。 在代理包含形状的情况下，这依赖于回调来执行精确的光线投射。 回调还执行任何碰撞过滤。
+   *    这具有大致等于 k ​​ log(n) 的性能，其中 k 是冲突的数量，n 是树中代理的数量
+   *
+   *
+  callback – a callback class that is called for each proxy that is hit by the ray.
+
+  input – the ray-cast input data. The ray extends from p1 to p1 + maxFraction * (p2 - p1)
    */
   void raycast(TreeRayCastCallback callback, RayCastInput input);
 

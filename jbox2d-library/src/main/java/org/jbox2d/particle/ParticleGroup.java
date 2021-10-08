@@ -121,12 +121,15 @@ public class ParticleGroup {
       for (int i = m_firstIndex; i < m_lastIndex; i++) {
         m_mass += m;
         Vec2 pos = m_system.m_positionBuffer.data[i];
+        //中心 += 质量 * 位置
         m_center.x += m * pos.x;
         m_center.y += m * pos.y;
         Vec2 vel = m_system.m_velocityBuffer.data[i];
+        //v.x += m * v
         m_linearVelocity.x += m * vel.x;
         m_linearVelocity.y += m * vel.y;
       }
+      //求一个平均
       if (m_mass > 0) {
         m_center.x *= 1 / m_mass;
         m_center.y *= 1 / m_mass;
@@ -142,7 +145,7 @@ public class ParticleGroup {
         float py = pos.y - m_center.y;
         float vx = vel.x - m_linearVelocity.x;
         float vy = vel.y - m_linearVelocity.y;
-        m_inertia += m * (px * px + py * py);
+        m_inertia += m * (px * px + py * py); //m *
         m_angularVelocity += m * (px * vy - py * vx);
       }
       if (m_inertia > 0) {

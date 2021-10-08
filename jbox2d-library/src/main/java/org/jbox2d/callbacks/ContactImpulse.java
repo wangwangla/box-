@@ -34,6 +34,10 @@ import org.jbox2d.common.Settings;
  * b2Manifold.
  * 
  * @author Daniel Murphy
+ *
+ * 接触报告的冲动。
+ * 使用脉冲而不是力是因为子步力可能会在刚体碰撞时接近无穷大。
+ * 这些与 b2Manifold 中的接触点一一匹配
  */
 public class ContactImpulse {
   public float[] normalImpulses = new float[Settings.maxManifoldPoints];

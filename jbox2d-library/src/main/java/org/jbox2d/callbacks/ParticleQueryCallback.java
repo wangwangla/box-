@@ -7,7 +7,8 @@ import org.jbox2d.dynamics.World;
  * {@link World#queryAABB(QueryCallback, org.jbox2d.collision.AABB)}.
  * 
  * @author dmurph
- * 
+ *
+ * 粒子的AABBB查询
  */
 public interface ParticleQueryCallback {
   /**
