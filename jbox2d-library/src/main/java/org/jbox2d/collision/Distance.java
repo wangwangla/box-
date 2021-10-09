@@ -611,7 +611,9 @@ public class Distance {
    * Compute the closest points between two shapes. Supports any combination of: CircleShape and
    * PolygonShape. The simplex cache is input/output. On the first call set SimplexCache.count to
    * zero.
-   * 
+   *
+   * 计算两个形状之间的最近点。支持以下任意组合：圆形和
+   * 多边形。单工缓存是输入/输出。在第一次调用时，将SimplexCache.count设置为零。
    * @param output
    * @param cache
    * @param input

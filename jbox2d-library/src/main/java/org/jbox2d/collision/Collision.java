@@ -40,7 +40,11 @@ import org.jbox2d.pooling.IWorldPool;
  * Functions used for computing contact points, distance queries, and TOI queries. Collision methods
  * are non-static for pooling speed, retrieve a collision object from the {@link SingletonPool}.
  * Should not be finalructed.
- * 
+ *
+ * 用于计算接触点、距离查询和TOI查询的函数。碰撞方法
+ * 如果池速度是非静态的，请从SingletonPool检索冲突对象。
+ * 不应该是最后的结果。
+ *
  * @author Daniel Murphy
  */
 public class Collision {
@@ -64,7 +68,7 @@ public class Collision {
 
   /**
    * Determine if two generic shapes overlap.
-   * 
+   * 判断两个性转不过是不是重叠
    * @param shapeA
    * @param shapeB
    * @param xfA

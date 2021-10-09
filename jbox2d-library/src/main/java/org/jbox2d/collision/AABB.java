@@ -183,6 +183,8 @@ public class AABB {
      * boolean result = true; result = result && lowerBound.x <= aabb.lowerBound.x; result = result
      * && lowerBound.y <= aabb.lowerBound.y; result = result && aabb.upperBound.x <= upperBound.x;
      * result = result && aabb.upperBound.y <= upperBound.y; return result;
+     *
+     * 是否包含
      */
     // djm: faster putting all of them together, as if one is false we leave the logic
     // early
@@ -327,6 +329,12 @@ public class AABB {
     return true;
   }
 
+  /**
+   * 重叠测试    没有重叠返回false 剩下的就是重叠
+   * @param a
+   * @param b
+   * @return
+   */
   public static final boolean testOverlap(final AABB a, final AABB b) {
     if (b.lowerBound.x - a.upperBound.x > 0.0f || b.lowerBound.y - a.upperBound.y > 0.0f) {
       return false;
