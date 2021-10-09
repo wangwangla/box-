@@ -3,7 +3,11 @@ package org.jbox2d.common;
 import java.lang.reflect.Array;
 
 public class BufferUtils {
-  /** Reallocate a buffer. */
+  /**
+   *  Reallocate a buffer.
+   *  创建BUffer
+   *  如果旧的有数据，那么就先复制数据   然后在剩下的创建对象
+   * */
   public static <T> T[] reallocateBuffer(Class<T> klass, T[] oldBuffer, int oldCapacity,
       int newCapacity) {
     assert (newCapacity > oldCapacity);

@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 /**
  * A 2-by-2 matrix. Stored in column-major order.
+ * 矩阵
  */
 public class Mat22 implements Serializable {
   private static final long serialVersionUID = 2L;

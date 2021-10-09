@@ -40,6 +40,9 @@ import org.jbox2d.common.Vec2;
  * there are self-intersections.
  * 
  * @author Daniel
+ *
+ * 链状是线段的自由形式序列。 链条具有两侧碰撞，因此您可以使用内部和外部碰撞。 因此，您可以使用任何缠绕顺序。
+ * 连接信息用于创建平滑的碰撞。 警告：如果存在自相交，链条将不会正确碰撞
  */
 public class ChainShape extends Shape {
 
