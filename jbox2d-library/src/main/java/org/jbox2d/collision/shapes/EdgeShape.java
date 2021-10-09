@@ -142,7 +142,7 @@ public class EdgeShape extends Shape {
     tempy = input.p1.y - xfp.y;
     final float p1x = xfq.c * tempx + xfq.s * tempy;
     final float p1y = -xfq.s * tempx + xfq.c * tempy;
-
+    //开始的位置 - 刚体的位置
     tempx = input.p2.x - xfp.x;
     tempy = input.p2.y - xfp.y;
     final float p2x = xfq.c * tempx + xfq.s * tempy;

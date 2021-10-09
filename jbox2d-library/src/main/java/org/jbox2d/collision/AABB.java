@@ -93,7 +93,7 @@ public class AABB {
 
   /**
    * Get the center of the AABB
-   * 
+   *  上加下除以2
    * @return
    */
   public final Vec2 getCenter() {
@@ -110,6 +110,7 @@ public class AABB {
 
   /**
    * Get the extents of the AABB (half-widths).
+   * 自身的中点
    * 
    * @return
    */
@@ -125,6 +126,10 @@ public class AABB {
     out.y = (upperBound.y - lowerBound.y) * .5f; // thanks FDN1
   }
 
+  /***
+   * 绘制矩形
+   * @param argRay
+   */
   public final void getVertices(Vec2[] argRay) {
     argRay[0].set(lowerBound);
     argRay[1].set(lowerBound);
@@ -136,7 +141,7 @@ public class AABB {
 
   /**
    * Combine two AABBs into this one.
-   * 
+   *  通过两个aabb 合并AABB    合并外部的
    * @param aabb1
    * @param aab
    */
@@ -149,7 +154,7 @@ public class AABB {
 
   /**
    * Gets the perimeter length
-   * 
+   * 外缘  周长吧
    * @return
    */
   public final float getPerimeter() {
@@ -158,7 +163,7 @@ public class AABB {
 
   /**
    * Combines another aabb with this one
-   * 
+   * 一个AABB     和自身合并
    * @param aabb
    */
   public final void combine(final AABB aabb) {
@@ -198,12 +203,24 @@ public class AABB {
 
   /**
    * From Real-time Collision Detection, p179.
-   * 
+   *
+   * input 其实和终点   分数
+   *
+   * 用户一般输入都是一个开始  一个结束   一个回调
+   *
+   *   public void raycast(RayCastCallback callback, Vec2 point1, Vec2 point2) {
+   *     wrcwrapper.broadPhase = m_contactManager.m_broadPhase;
+   *     wrcwrapper.callback = callback;
+   *     input.maxFraction = 1.0f;
+   *     input.p1.set(point1);
+   *     input.p2.set(point2);
+   *     m_contactManager.m_broadPhase.raycast(wrcwrapper, input);
+   *   }
+   *
    * @param output
    * @param input
    */
-  public final boolean raycast(final RayCastOutput output, final RayCastInput input,
-      IWorldPool argPool) {
+  public final boolean raycast(final RayCastOutput output, final RayCastInput input, IWorldPool argPool) {
     float tmin = -Float.MAX_VALUE;
     float tmax = Float.MAX_VALUE;
 
@@ -212,8 +229,12 @@ public class AABB {
     final Vec2 absD = argPool.popVec2();
     final Vec2 normal = argPool.popVec2();
 
+    /**
+     * 开头减去尾部
+     */
     p.set(input.p1);
     d.set(input.p2).subLocal(input.p1);
+    //距离得到绝对值
     Vec2.absToOut(d, absD);
 
     // x then y
