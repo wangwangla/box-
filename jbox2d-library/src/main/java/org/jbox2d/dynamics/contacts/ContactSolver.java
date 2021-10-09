@@ -368,6 +368,7 @@ public class ContactSolver {
         float dvy = wB * vcp.rB.x + vB.y - vA.y - wA * a.x;
 
         // Compute tangent force
+        //
         final float vt = dvx * tangentx + dvy * tangenty - vc.tangentSpeed;
         float lambda = vcp.tangentMass * (-vt);
 

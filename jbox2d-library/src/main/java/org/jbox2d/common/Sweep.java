@@ -29,18 +29,26 @@ import java.io.Serializable;
  * This describes the motion of a body/shape for TOI computation. Shapes are defined with respect to
  * the body origin, which may not coincide with the center of mass. However, to support dynamics we
  * must interpolate the center of mass position.
+ *
+ * 这描述了用于 TOI 计算的身体/形状的运动。 形状是相对于身体原点定义的，身体原点可能与质心不一致。
+ * 然而，为了支持动力学，我们必须插入质心位置
  */
 public class Sweep implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  /** Local center of mass position */
+  /** Local center of mass position
+   *  重量的中西你位置
+   * */
   public final Vec2 localCenter;
-  /** Center world positions */
+  /** Center world positions
+   * 世界的中旬*/
   public final Vec2 c0, c;
-  /** World angles */
+  /** World angles
+   * 世界角度 */
   public float a0, a;
 
-  /** Fraction of the current time step in the range [0,1] c0 and a0 are the positions at alpha0. */
+  /** Fraction of the current time step in the range [0,1] c0 and a0 are the positions at alpha0.
+   * 当前时间步长在 [0,1] c0 和 a0 范围内的分数是 alpha0 处的位置 */
   public float alpha0;
 
   public String toString() {

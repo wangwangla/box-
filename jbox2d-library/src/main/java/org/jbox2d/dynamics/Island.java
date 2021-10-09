@@ -241,6 +241,7 @@ public class Island {
   public void solve(Profile profile, TimeStep step, Vec2 gravity, boolean allowSleep) {
 
     // System.out.println("Solving Island");
+    // 时间
     float h = step.dt;
     //整合速度并应用阻尼。初始化主体状态。
     // Integrate velocities and apply damping. Initialize the body state.
@@ -260,23 +261,26 @@ public class Island {
         // Integrate velocities.
         //v += 时间  * （1 * x + 1 * 力）
         // v += h * (b.m_gravityScale * gravity + b.m_invMass * b.m_force);
+        //移动不仅仅是受到自由重力的作用，还会收到力的作用   v = at    F = ma
         v.x += h * (b.m_gravityScale * gravity.x + b.m_invMass * b.m_force.x);
         v.y += h * (b.m_gravityScale * gravity.y + b.m_invMass * b.m_force.y);
-        w += h * b.m_invI * b.m_torque;
+        w += h * b.m_invI * b.m_torque;  //质点的旋转动量    扭转力
 
         // Apply damping.
-        // ODE: dv/dt + c * v = 0
+        // ODE: dv/dt + c * v = 0      a = -cv
         // Solution: v(t) = v0 * exp(-c * t)
         // Time step: v(t + dt) = v0 * exp(-c * (t + dt)) = v0 * exp(-c * t) * exp(-c * dt) = v *
         // exp(-c * dt)
         // v2 = exp(-c * dt) * v1
         // Pade approximation:
         // v2 = v1 * 1 / (1 + c * dt)
+        // v.x
         v.x *= 1.0f / (1.0f + h * b.m_linearDamping);
         v.y *= 1.0f / (1.0f + h * b.m_linearDamping);
         w *= 1.0f / (1.0f + h * b.m_angularDamping);
       }
 
+      //设置当前的位置 和 速度
       m_positions[i].c.x = c.x;
       m_positions[i].c.y = c.y;
       m_positions[i].a = a;
@@ -337,23 +341,26 @@ public class Island {
       float w = m_velocities[i].w;
 
       // Check for large velocities
+      // 移动的距离   v * t
       float translationx = v.x * h;
       float translationy = v.y * h;
-
+      //检查最大 线速度   不应该大于这个   大于的时候就将速度 设置回来
+      //速度的一个校验把
       if (translationx * translationx + translationy * translationy > Settings.maxTranslationSquared) {
         float ratio = Settings.maxTranslation
             / MathUtils.sqrt(translationx * translationx + translationy * translationy);
         v.x *= ratio;
         v.y *= ratio;
       }
-
+      //旋转力
       float rotation = h * w;
       if (rotation * rotation > Settings.maxRotationSquared) {
         float ratio = Settings.maxRotation / MathUtils.abs(rotation);
         w *= ratio;
       }
 
-      // Integrate
+      // Integrate    计算位置
+      // v * t = x;
       c.x += h * v.x;
       c.y += h * v.y;
       a += h * w;
@@ -363,6 +370,7 @@ public class Island {
     }
 
     // Solve position constraints
+    // 计算几次回复位置   也就是在碰撞发生后  如何复原
     timer.reset();
     boolean positionSolved = false;
     for (int i = 0; i < step.positionIterations; ++i) {
@@ -382,6 +390,7 @@ public class Island {
     }
 
     // Copy state buffers back to the bodies
+    // 上面计算了位置  速度   角速度  角度  这里进行一次参数更关心
     for (int i = 0; i < m_bodyCount; ++i) {
       Body body = m_bodies[i];
       body.m_sweep.c.x = m_positions[i].c.x;

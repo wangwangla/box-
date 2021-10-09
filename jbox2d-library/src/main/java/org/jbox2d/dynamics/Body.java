@@ -88,6 +88,7 @@ public class Body {
   public float m_mass, m_invMass;
 
   // Rotational inertia about the center of mass.
+  // 质点的旋转动量
   public float m_I, m_invI;
 
   public float m_linearDamping;

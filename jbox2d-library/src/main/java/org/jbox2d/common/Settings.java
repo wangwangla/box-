@@ -29,7 +29,9 @@ package org.jbox2d.common;
  */
 public class Settings {
 
-  /** A "close to zero" float epsilon value for use */
+  /** A "close to zero" float epsilon value for use
+   * 一个接近于0的浮点数
+   * */
   public static final float EPSILON = 1.1920928955078125E-7f;
 
   /** Pi. */
@@ -67,6 +69,10 @@ public class Settings {
    * <li>3.07000E-5</li>
    * <li>1.53999E-5</li>
    * </ul>
+   *
+   * 精度越小，表越大。 如果使用小表格（例如，精度为 0.006 或更高），
+   * 请确保将表格设置为 lerp 其结果。
+   * 精度图表位于 MathUtils 源中。 或者，自己在SinCosTest 中运行测试
    */
   public static final float SINCOS_LUT_PRECISION = .00011f;
   public static final int SINCOS_LUT_LENGTH = (int) Math.ceil(Math.PI * 2 / SINCOS_LUT_PRECISION);
@@ -82,23 +88,27 @@ public class Settings {
 
   /**
    * The maximum number of contact points between two convex shapes.
+   * 两个凸面形状之间的接触点
    */
   public static int maxManifoldPoints = 2;
 
   /**
    * The maximum number of vertices on a convex polygon.
+   * 凸面最大的顶点数
    */
   public static int maxPolygonVertices = 8;
 
   /**
    * This is used to fatten AABBs in the dynamic tree. This allows proxies to move by a small amount
    * without triggering a tree adjustment. This is in meters.
+   * 这用于在动态树中增肥 AABB。 这允许代理移动少量而不触发树调整。 这是以米为单位的
    */
   public static float aabbExtension = 0.1f;
 
   /**
    * This is used to fatten AABBs in the dynamic tree. This is used to predict the future position
    * based on the current displacement. This is a dimensionless multiplier.
+   * 当前预测未来
    */
   public static float aabbMultiplier = 2.0f;
 

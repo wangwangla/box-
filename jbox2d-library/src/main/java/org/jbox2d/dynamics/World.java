@@ -1097,10 +1097,12 @@ public class World {
     }
 
     // Build and simulate all awake islands.
+    //创建刚体数组
     int stackSize = m_bodyCount;
     if (stack.length < stackSize) {
       stack = new Body[stackSize];
     }
+    //遍历刚体列表
     for (Body seed = m_bodyList; seed != null; seed = seed.m_next) {
       if ((seed.m_flags & Body.e_islandFlag) == Body.e_islandFlag) {
         continue;
@@ -1152,6 +1154,7 @@ public class World {
           }
 
           // Skip sensors.
+          //
           boolean sensorA = contact.m_fixtureA.m_isSensor;
           boolean sensorB = contact.m_fixtureB.m_isSensor;
           if (sensorA || sensorB) {
@@ -1198,6 +1201,7 @@ public class World {
           other.m_flags |= Body.e_islandFlag;
         }
       }
+      //处理位置的
       island.solve(m_profile, step, m_gravity, m_allowSleep);
 
       // Post solve cleanup.
@@ -1493,6 +1497,7 @@ public class World {
       subStep.positionIterations = 20;
       subStep.velocityIterations = step.velocityIterations;
       subStep.warmStarting = false;
+      //速度矫正
       island.solveTOI(subStep, bA.m_islandIndex, bB.m_islandIndex);
 
       // Reset island flags and synchronize broad-phase proxies.
