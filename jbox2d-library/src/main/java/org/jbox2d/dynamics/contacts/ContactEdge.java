@@ -31,6 +31,8 @@ import org.jbox2d.dynamics.Body;
  * in each attached body. Each contact has two contact nodes, one for each attached body.
  * 
  * @author daniel
+ *
+ * 它是一个节点，比如一个刚体如果关联了多个，就拉链
  */
 public class ContactEdge {
 

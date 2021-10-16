@@ -32,6 +32,7 @@ public class BulletTest extends TestbedTest {
   public void initTest(boolean deserialized) {
     {
       BodyDef bd = new BodyDef();
+      bd.angle = (float) Math.toRadians(10);
       bd.position.set(0.0f, 0.0f);
       Body body = m_world.createBody(bd);
       EdgeShape edge = new EdgeShape();
@@ -42,29 +43,29 @@ public class BulletTest extends TestbedTest {
       body.createFixture(shape, 1.0f);
     }
 
-    {
-      BodyDef bd = new BodyDef();
-      bd.type = BodyType.DYNAMIC;
-      bd.position.set(0.0f, 4.0f);
-
-      PolygonShape box = new PolygonShape();
-      box.setAsBox(2.0f, 0.1f);
-
-      m_body = m_world.createBody(bd);
-      m_body.createFixture(box, 0);
-
-      box.setAsBox(0.25f, 0.25f);
-
-      // m_x = RandomFloat(-1.0f, 1.0f);
-      m_x = -0.06530577f;
-      bd.position.set(m_x, 10.0f);
-      bd.bullet = false;
-
-      m_bullet = m_world.createBody(bd);
-      m_bullet.createFixture(box, 100.0f);
-
-      m_bullet.setLinearVelocity(new Vec2(0.0f, -5000.0f));
-    }
+//    {
+//      BodyDef bd = new BodyDef();
+//      bd.type = BodyType.DYNAMIC;
+//      bd.position.set(0.0f, 4.0f);
+//
+//      PolygonShape box = new PolygonShape();
+//      box.setAsBox(2.0f, 0.1f);
+//
+//      m_body = m_world.createBody(bd);
+//      m_body.createFixture(box, 0);
+//
+//      box.setAsBox(0.25f, 0.25f);
+//
+//      // m_x = RandomFloat(-1.0f, 1.0f);
+//      m_x = -0.06530577f;
+//      bd.position.set(m_x, 10.0f);
+//      bd.bullet = false;
+//
+//      m_bullet = m_world.createBody(bd);
+//      m_bullet.createFixture(box, 100.0f);
+//
+//      m_bullet.setLinearVelocity(new Vec2(0.0f, -5000.0f));
+//    }
   }
 
   public void launch() {

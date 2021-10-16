@@ -41,6 +41,8 @@ public class ContactFilter {
 
 	/**
 	 * 如果两个物体接触就会触发碰撞  那么就返回true
+	 *
+	 * 我认为这里是来判断它们是不是会发生什么反应
 	 * Return true if contact calculations should be performed between these two shapes.
 	 * @warning for performance reasons this is only called when the AABBs begin to overlap.
 	 * @param fixtureA

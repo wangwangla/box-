@@ -196,7 +196,8 @@ public class Collision {
 
   /**
    * Compute the collision manifold between two circles.
-   * 
+   *
+   * 模拟两个圆
    * @param manifold
    * @param circle1
    * @param xfA
@@ -212,9 +213,10 @@ public class Collision {
     // d.set(pB).subLocal(pA);
     // float distSqr = d.x * d.x + d.y * d.y;
 
-    // after inline:
+    // after inline: 刚体的中西你位置
     Vec2 circle1p = circle1.m_p;
     Vec2 circle2p = circle2.m_p;
+    //s c sin   cos
     float pAx = (xfA.q.c * circle1p.x - xfA.q.s * circle1p.y) + xfA.p.x;
     float pAy = (xfA.q.s * circle1p.x + xfA.q.c * circle1p.y) + xfA.p.y;
     float pBx = (xfB.q.c * circle2p.x - xfB.q.s * circle2p.y) + xfB.p.x;
