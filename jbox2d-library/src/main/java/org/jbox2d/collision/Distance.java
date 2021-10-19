@@ -662,7 +662,7 @@ public class Distance {
           break;
         case 3:
           simplex.solve3();
-          break;
+          break;C
         default:
           assert (false);
       }
