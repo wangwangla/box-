@@ -37,6 +37,9 @@ import org.jbox2d.pooling.arrays.Vec2Array;
 /**
  * A convex polygon shape. Polygons have a maximum number of vertices equal to _maxPolygonVertices.
  * In most cases you should not need many vertices for a convex polygon.
+ *
+ * 凸多边形形状。 多边形的最大顶点数等于 _maxPolygonVertices。 在大多数情况下，凸多边形不需要很多顶点
+ * 最多的顶点个数是8
  */
 public class PolygonShape extends Shape {
   /** Dump lots of debug information. */
@@ -44,23 +47,30 @@ public class PolygonShape extends Shape {
 
   /**
    * Local position of the shape centroid in parent body frame.
+   * 父类框架中中心的位置
    */
   public final Vec2 m_centroid = new Vec2();
 
   /**
    * The vertices of the shape. Note: use getVertexCount(), not m_vertices.length, to get number of
    * active vertices.
+   *
+   * 形状的顶点
    */
   public final Vec2 m_vertices[];
 
   /**
    * The normals of the shape. Note: use getVertexCount(), not m_normals.length, to get number of
    * active normals.
+   *
+   * 形状的法线。 注意：使用 getVertexCount() 而不是 m_normals.length 来获取活动法线的数量
    */
   public final Vec2 m_normals[];
 
   /**
    * Number of active vertices in the shape.
+   *
+   * 形状活跃 的顶点数目
    */
   public int m_count;
 
@@ -105,6 +115,8 @@ public class PolygonShape extends Shape {
    * 
    * @warning the points may be re-ordered, even if they form a convex polygon.
    * @warning collinear points are removed.
+   *
+   * 给定顶点创建一个包    顶点的个数为3+
    */
   public final void set(final Vec2[] vertices, final int count) {
     set(vertices, count, null, null);
@@ -240,6 +252,8 @@ public class PolygonShape extends Shape {
    * 
    * @param hx the half-width.
    * @param hy the half-height.
+   *
+   * 为每一个顶点都创建一个法线
    */
   public final void setAsBox(final float hx, final float hy) {
     m_count = 4;

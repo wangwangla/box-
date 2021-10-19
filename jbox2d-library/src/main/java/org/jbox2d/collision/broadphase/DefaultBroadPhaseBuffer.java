@@ -39,6 +39,9 @@ import org.jbox2d.common.Vec2;
  * client to consume the new pairs and to track subsequent overlap.
  * 
  * @author Daniel Murphy
+ *
+ * Broad-phase 用于计算对并执行体积查询和光线投射。 这个广泛的阶段不会持续对。
+ * 相反，这会报告潜在的新对。 由客户端使用新对并跟踪后续重叠。
  */
 public class DefaultBroadPhaseBuffer implements TreeCallback, BroadPhase {
 
@@ -174,6 +177,7 @@ public class DefaultBroadPhaseBuffer implements TreeCallback, BroadPhase {
       Object userDataB = m_tree.getUserData((int) (primaryPair));
 
       // log.debug("returning pair: "+userDataA+", "+userDataB);
+      //增加对
       callback.addPair(userDataA, userDataB);
       ++i;
 

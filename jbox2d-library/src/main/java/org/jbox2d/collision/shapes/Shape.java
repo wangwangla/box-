@@ -33,9 +33,13 @@ import org.jbox2d.common.Vec2;
  * A shape is used for collision detection. You can create a shape however you like. Shapes used for
  * simulation in World are created automatically when a Fixture is created. Shapes may encapsulate a
  * one or more child shapes.
+ *
+ * 形状用于碰撞检测。 您可以随意创建形状。 创建夹具时，会自动创建用于 World 中模拟的形状。 形状可以封装一个或多个子形状
  */
 public abstract class Shape {
-
+  /**
+   * 类型
+   */
   public final ShapeType m_type;
   public float m_radius;
 
@@ -84,6 +88,14 @@ public abstract class Shape {
    * 
    * @param xf the shape world transform.
    * @param p a point in world coordinates.
+   *
+   *  以这种形状测试一个点的遏制。 这仅适用于凸面形状。
+   *
+   * 参数：
+   * xf – 形状世界变换（坐标属性）。
+   * p – 世界坐标中的一个点
+   *
+   * 点和使世界中的位置关系
    */
   public abstract boolean testPoint(final Transform xf, final Vec2 p);
 
@@ -95,6 +107,8 @@ public abstract class Shape {
    * @param argTransform the transform to be applied to the shape.
    * @param argChildIndex the child shape index
    * @return if hit
+   *
+   * 形状
    */
   public abstract boolean raycast(RayCastOutput output, RayCastInput input, Transform transform,
       int childIndex);
@@ -114,6 +128,14 @@ public abstract class Shape {
    * 
    * @param massData returns the mass data for this shape.
    * @param density the density in kilograms per meter squared.
+   *
+   *
+   * 使用其尺寸和密度计算该形状的质量属性。 惯性张量是关于局部原点计算的。
+   *
+   * 参数：
+   * massData – 返回此形状的质量数据。
+   * 密度 - 每平方米公斤的密度。
+   *
    */
   public abstract void computeMass(final MassData massData, final float density);
 
@@ -125,6 +147,8 @@ public abstract class Shape {
    * @param p a point in world coordinates.
    * @param normalOut returns the direction in which the distance increases.
    * @return distance returns the distance from the current shape.
+   *
+   * 当前点  到  指定点的距离
    */
   public abstract float computeDistanceToOut(Transform xf, Vec2 p, int childIndex, Vec2 normalOut);
 

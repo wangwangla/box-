@@ -56,6 +56,8 @@ public class ContactManager implements PairCallback {
 
   /**
    * Broad-phase callback.
+   *
+   * 两个如果发生碰撞 那么就会
    * 
    * @param proxyUserDataA
    * @param proxyUserDataB
@@ -81,14 +83,16 @@ public class ContactManager implements PairCallback {
     // TODO_ERIN use a hash table to remove a potential bottleneck when both
     // bodies have a lot of contacts.
     // Does a contact already exist?
+    //拿到B有关系的
     ContactEdge edge = bodyB.getContactList();
     while (edge != null) {
+      //有关系的判断是不是A,我认为其他的会自己出里，这里只处理一个
       if (edge.other == bodyA) {
         Fixture fA = edge.contact.getFixtureA();
         Fixture fB = edge.contact.getFixtureB();
         int iA = edge.contact.getChildIndexA();
         int iB = edge.contact.getChildIndexB();
-
+        //判断A中有没有B的关联关系，为了方式环形依赖把
         if (fA == fixtureA && iA == indexA && fB == fixtureB && iB == indexB) {
           // A contact already exists.
           return;
@@ -109,11 +113,14 @@ public class ContactManager implements PairCallback {
     }
 
     // Check user filtering.
+//    它们会不会发生什么反应
     if (m_contactFilter != null && m_contactFilter.shouldCollide(fixtureA, fixtureB) == false) {
       return;
     }
 
     // Call the factory.
+    // 什么时候会返回null  就是图形没有经历注册的，   我认为不会出现 null
+    //
     Contact c = pool.popContact(fixtureA, indexA, fixtureB, indexB);
     if (c == null) {
       return;
@@ -244,6 +251,7 @@ public class ContactManager implements PairCallback {
       // is this contact flagged for filtering?
       if ((c.m_flags & Contact.FILTER_FLAG) == Contact.FILTER_FLAG) {
         // Should these bodies collide?
+        // 它们是不是静态的，静态没啥用  如果它们之间没有用就删除了
         if (bodyB.shouldCollide(bodyA) == false) {
           Contact cNuke = c;
           c = cNuke.getNext();
@@ -252,6 +260,7 @@ public class ContactManager implements PairCallback {
         }
 
         // Check user filtering.
+        //如果它们之间不会发生什么效果，   那么就删除
         if (m_contactFilter != null && m_contactFilter.shouldCollide(fixtureA, fixtureB) == false) {
           Contact cNuke = c;
           c = cNuke.getNext();
@@ -267,6 +276,7 @@ public class ContactManager implements PairCallback {
       boolean activeB = bodyB.isAwake() && bodyB.m_type != BodyType.STATIC;
 
       // At least one body must be awake and it must be dynamic or kinematic.
+      //两个需要模拟需要都是活跃的
       if (activeA == false && activeB == false) {
         c = c.getNext();
         continue;
@@ -274,9 +284,11 @@ public class ContactManager implements PairCallback {
 
       int proxyIdA = fixtureA.m_proxies[indexA].proxyId;
       int proxyIdB = fixtureB.m_proxies[indexB].proxyId;
+      //两个是不是有重叠
       boolean overlap = m_broadPhase.testOverlap(proxyIdA, proxyIdB);
 
       // Here we destroy contacts that cease to overlap in the broad-phase.
+      //没有重叠就删除了
       if (overlap == false) {
         Contact cNuke = c;
         c = cNuke.getNext();
@@ -285,6 +297,7 @@ public class ContactManager implements PairCallback {
       }
 
       // The contact persists.
+      //开始模拟
       c.update(m_contactListener);
       c = c.getNext();
     }

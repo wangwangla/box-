@@ -132,7 +132,9 @@ public class World {
 
   private ParticleSystem m_particleSystem;
 
-
+  /**
+   * 存储创建器
+   */
   private ContactRegister[][] contactStacks =
       new ContactRegister[ShapeType.values().length][ShapeType.values().length];
 
@@ -220,6 +222,12 @@ public class World {
     return m_allowSleep;
   }
 
+  /**
+   * 存储图形的类型   这个我认为是为了将所有的情况都包含吧，所以后面有一个如果不相同
+   * @param creator
+   * @param type1
+   * @param type2
+   */
   private void addType(IDynamicStack<Contact> creator, ShapeType type1, ShapeType type2) {
     ContactRegister register = new ContactRegister();
     register.creator = creator;
@@ -234,6 +242,11 @@ public class World {
     }
   }
 
+  /**
+   * 使用那种方式创建图形
+   * 1.使用cir属性绘制圆
+   * 2.使用polygon绘制等
+   */
   private void initializeRegisters() {
     addType(pool.getCircleContactStack(), ShapeType.CIRCLE, ShapeType.CIRCLE);
     addType(pool.getPolyCircleContactStack(), ShapeType.POLYGON, ShapeType.CIRCLE);
@@ -341,7 +354,7 @@ public class World {
    * @param def
    * @return
    *
-   * 创建的刚体会存到一个链表中
+   * 创建的刚体会存到一个链表中   插入到头部
    */
   public Body createBody(BodyDef def) {
     assert (isLocked() == false);
@@ -371,6 +384,8 @@ public class World {
    * @warning This automatically deletes all associated shapes and joints.
    * @warning This function is locked during callbacks.
    * @param body
+   *
+   * 删除刚体 ，先删除节点    删除它的关系  删除图形
    */
   public void destroyBody(Body body) {
     assert (m_bodyCount > 0);
@@ -610,6 +625,7 @@ public class World {
     // If new fixtures were added, we need to find the new contacts.
     if ((m_flags & NEW_FIXTURE) == NEW_FIXTURE) {
       // log.debug("There's a new fixture, lets look for new contacts");
+      //找出相关联的
       m_contactManager.findNewContacts();
       m_flags &= ~NEW_FIXTURE;
     }
@@ -624,12 +640,9 @@ public class World {
     } else {
       step.inv_dt = 0.0f;
     }
-
     step.dtRatio = m_inv_dt0 * dt;
-
     step.warmStarting = m_warmStarting;
     m_profile.stepInit.record(tempTimer.getMilliseconds());
-
     // Update contacts. This is where some contacts are destroyed.
     tempTimer.reset();
     //得到相关联的，然后进行遍历，
@@ -637,6 +650,7 @@ public class World {
     m_profile.collide.record(tempTimer.getMilliseconds());
 
     // Integrate velocities, solve velocity constraints, and integrate positions.
+    // 处理速度
     if (m_stepComplete && step.dt > 0.0f) {
       tempTimer.reset();
       m_particleSystem.solve(step); // Particle Simulation
@@ -1082,6 +1096,7 @@ public class World {
     }
 
     // Size the island for the worst case.
+    // 初始化地面
     island.init(m_bodyCount, m_contactManager.m_contactCount, m_jointCount,
         m_contactManager.m_contactListener);
 
@@ -1131,6 +1146,7 @@ public class World {
         island.add(b);
 
         // Make sure the body is awake.
+        //每次处理之前都会将刚体先设置为睡眠
         b.setAwake(true);
 
         // To keep islands as small as possible, we don't
@@ -1201,7 +1217,7 @@ public class World {
           other.m_flags |= Body.e_islandFlag;
         }
       }
-      //处理位置的
+      //处理位置和速度
       island.solve(m_profile, step, m_gravity, m_allowSleep);
 
       // Post solve cleanup.

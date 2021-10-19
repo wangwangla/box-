@@ -25,6 +25,11 @@ package org.jbox2d.dynamics.contacts;
 
 import org.jbox2d.pooling.IDynamicStack;
 
+/**
+ * 图形的类型  比如圆绘制圆   圆就是主   如果二者不一样就不是主
+ *
+ * 但是它的实现是分了但是没有啥区别
+ */
 public class ContactRegister {
   public IDynamicStack<Contact> creator;
   public boolean primary;

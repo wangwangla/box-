@@ -39,7 +39,11 @@ import org.jbox2d.dynamics.contacts.Contact;
  * @warning You cannot create/destroy Box2D entities inside these callbacks.
  * @author Daniel Murphy
  *
- * 处理碰撞的方法
+ * 实现此类以获取联系信息。 您可以将这些结果用于声音和游戏逻辑等内容。
+ * 您还可以通过在时间步之后遍历联系人列表来获取联系人结果。
+ * 但是，您可能会错过一些接触，因为连续物理会导致子步进。
+ * 此外，您可能会在一个时间步内收到同一联系人的多个回调。
+ * 您应该努力使您的回调高效，因为每个时间步长可能有许多回调
  *
  */
 public interface ContactListener {
@@ -47,6 +51,8 @@ public interface ContactListener {
 	/**
 	 * Called when two fixtures begin to touch.
 	 * @param contact
+	 *
+	 * 接触的 时候调用
 	 */
 	public void beginContact(Contact contact);
 	
@@ -71,6 +77,13 @@ public interface ContactListener {
 	 * for each thread.
 	 * @param contact
 	 * @param oldManifold
+	 *
+	 * 这在联系人更新后调用。 这允许您在接触求解器之前检查接触。
+	 * 如果您小心，您可以修改接触歧管（例如禁用接触）。 提供了旧歧管的副本，
+	 * 以便您可以检测更改。 注意：这仅适用于清醒的身体。 注意：即使接触点数为零，也会调用此方法。
+	 * 注意：这不是传感器的要求。 注意：如果您将接触点的数量设置为零，您将不会收到 EndContact 回调。
+	 * 但是，您可能会在下一步收到 BeginContact 回调。 注意：oldManifold 参数是池化的，
+	 * 因此对于每个线程的每个回调，它都是相同的对象。z
 	 */
 	public void preSolve(Contact contact, Manifold oldManifold);
 	
@@ -84,6 +97,10 @@ public interface ContactListener {
 	 * @param contact
 	 * @param impulse this is usually a pooled variable, so it will be modified after
 	 * this call
+	 *
+	 *  这使您可以在求解器完成后检查接触。 这对于检查脉冲很有用。
+	 *   注意：接触流形不包括冲击脉冲的时间，如果子步小，可以任意大。
+	 *   因此，在单独的数据结构中明确提供了脉冲。 注意：这仅适用于接触、固定和清醒的接触
 	 */
 	public void postSolve(Contact contact, ContactImpulse impulse);
 }

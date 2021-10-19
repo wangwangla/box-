@@ -170,35 +170,35 @@ public class Car extends TestbedTest {
       shape.set(new Vec2(x, 0.0f), new Vec2(x + 10.0f, 5.0f));
       ground.createFixture(fd);
 
-      x += 20.0f;
-      shape.set(new Vec2(x, 0.0f), new Vec2(x + 40.0f, 0.0f));
-      ground.createFixture(fd);
-
-      x += 40.0f;
-      shape.set(new Vec2(x, 0.0f), new Vec2(x, 20.0f));
-      ground.createFixture(fd);
+//      x += 20.0f;
+//      shape.set(new Vec2(x, 0.0f), new Vec2(x + 40.0f, 0.0f));
+//      ground.createFixture(fd);
+//
+//      x += 40.0f;
+//      shape.set(new Vec2(x, 0.0f), new Vec2(x, 20.0f));
+//      ground.createFixture(fd);
     }
 
-    // Teeter
-    {
-      BodyDef bd = new BodyDef();
-      bd.position.set(140.0f, 1.0f);
-      bd.type = BodyType.DYNAMIC;
-      Body body = m_world.createBody(bd);
-
-      PolygonShape box = new PolygonShape();
-      box.setAsBox(10.0f, 0.25f);
-      body.createFixture(box, 1.0f);
-
-      RevoluteJointDef jd = new RevoluteJointDef();
-      jd.initialize(ground, body, body.getPosition());
-      jd.lowerAngle = -8.0f * MathUtils.PI / 180.0f;
-      jd.upperAngle = 8.0f * MathUtils.PI / 180.0f;
-      jd.enableLimit = true;
-      m_world.createJoint(jd);
-
-      body.applyAngularImpulse(100.0f);
-    }
+//    // Teeter
+//    {
+//      BodyDef bd = new BodyDef();
+//      bd.position.set(140.0f, 1.0f);
+//      bd.type = BodyType.DYNAMIC;
+//      Body body = m_world.createBody(bd);
+//
+//      PolygonShape box = new PolygonShape();
+//      box.setAsBox(10.0f, 0.25f);
+//      body.createFixture(box, 1.0f);
+//
+//      RevoluteJointDef jd = new RevoluteJointDef();
+//      jd.initialize(ground, body, body.getPosition());
+//      jd.lowerAngle = -8.0f * MathUtils.PI / 180.0f;
+//      jd.upperAngle = 8.0f * MathUtils.PI / 180.0f;
+//      jd.enableLimit = true;
+//      m_world.createJoint(jd);
+//
+//      body.applyAngularImpulse(100.0f);
+//    }
 
     // Bridge
     {

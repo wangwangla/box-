@@ -261,6 +261,11 @@ public abstract class Contact {
   // djm pooling
   private final Manifold oldManifold = new Manifold();
 
+  /**
+   * 经过一系列的判断开始模拟
+   *
+   * @param listener
+   */
   public void update(ContactListener listener) {
 
     oldManifold.set(m_manifold);
@@ -282,14 +287,18 @@ public abstract class Contact {
     // log.debug("TransformA: "+xfA);
     // log.debug("TransformB: "+xfB);
 
+    //触发器
     if (sensor) {
       Shape shapeA = m_fixtureA.getShape();
       Shape shapeB = m_fixtureB.getShape();
+      //它们是不是接触
       touching = pool.getCollision().testOverlap(shapeA, m_indexA, shapeB, m_indexB, xfA, xfB);
 
       // Sensors don't generate manifolds.
+      // sensor：
       m_manifold.pointCount = 0;
     } else {
+      //碰撞点的信息
       evaluate(m_manifold, xfA, xfB);
       touching = m_manifold.pointCount > 0;
 
